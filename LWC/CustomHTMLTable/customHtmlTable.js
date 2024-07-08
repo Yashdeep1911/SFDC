@@ -58,6 +58,10 @@ export default class Cpq_genericListView extends NavigationMixin(
   hasMenus = true; // flag to indicate whether menu should be displayed at the end of each row
   menuButtons = []; // A list of only buttons inside the menu dropdown
   rowDataTemp = [];
+
+get isMassActionEmpty(){
+     return this.massActions.length === 0;
+}
   //Creates the style for setting table height
   get isHeight() {
     return (this.tableHeight
