@@ -1,0 +1,108 @@
+<template>
+    <span class={cellClass} title={tooltip}>
+            <template if:true={cellIconLeft}>
+                <template if:false={iconWithTooltip}>
+                    <lightning-icon icon-name={iconName} alternative-text={cellAttribute.iconAlternativeText}
+                        title={cellAttribute.iconLabel} size="x-small" class="slds-p-right_xx-small"></lightning-icon>
+                </template>
+                <template if:true={iconWithTooltip}>
+                    <span class="tooltip">
+                        <div class="slds-popover slds-popover_tooltip slds-nubbin_left-bottom slds-slide-from-top-to-bottom tooltiptext"
+                            role="tooltip" style={tooltipStyle}>
+                            <div class="slds-popover__body">{cellAttribute.iconLabel}</div>
+                        </div>
+                        <lightning-icon icon-name={iconName} alternative-text={cellAttribute.iconAlternativeText}
+                            size="x-small" class="slds-p-right_xx-small">
+                        </lightning-icon>
+                    </span>
+                </template>
+            </template>
+                <template if:true={isCheckboxDisabled}>
+                    <template if:true={value}>
+                        <input if:true={isBoolean} style={getStyle} class="slds-m-left_x-small" type="checkbox" checked onchange={checkBoxHandler} disabled></input>
+                    </template>
+                    <template if:false={value}>
+                        <input if:true={isBoolean} style={getStyle} class="slds-m-left_x-small" type="checkbox" onchange={checkBoxHandler} disabled></input>
+                    </template>
+                </template>
+                <template if:false={isCheckboxDisabled}>
+                    <template if:true={value}>
+                        <input if:true={isBoolean} style={getStyle} class="slds-m-left_x-small" type="checkbox" checked onchange={checkBoxHandler}></input>
+                    </template>
+                    <template if:false={value}>
+                        <input if:true={isBoolean} style={getStyle} class="slds-m-left_x-small" type="checkbox" onchange={checkBoxHandler}></input>
+                    </template>
+                </template>
+                <template if:true={isButton}>
+                    <lightning-button variant={typeAttribute.variant} label={typeAttribute.label}
+                        title={typeAttribute.title} icon-name={typeAttribute.iconName}
+                        icon-position={typeAttribute.iconPosition} disabled={typeAttribute.disabled}
+                        name={typeAttribute.name} style={getStyle} class="slds-m-left_x-small"></lightning-button>
+                </template>
+                <template if:true={isButtonIcon}>
+                    <lightning-button-icon icon-name={typeAttribute.iconName} icon-class={typeAttribute.iconClass}
+                        name={typeAttribute.name} variant={typeAttribute.variant} size={typeAttribute.size}
+                        disabled={typeAttribute.disabled} alternative-text={typeAttribute.alternativeText} style={getStyle}>
+                    </lightning-button-icon>
+                </template>
+                <template if:true={isPhone}>
+                    <lightning-formatted-phone class={divStyle} value={value} title={tooltip} style={getStyle}></lightning-formatted-phone>
+                </template>
+                <template if:true={isUrl}>
+                    <lightning-formatted-url value={value} label={typeAttribute.label} target={typeAttribute.target}
+                    class={divStyle} tooltip={typeAttribute.label} style={getStyle}></lightning-formatted-url>
+                </template>
+                <!-- <template if:true={isEmail}>
+                    <lightning-formatted-email value={value} label={typeAttribute.label} title={typeAttribute.label}>
+                    </lightning-formatted-email>
+                </template> -->
+                <a if:true={isEmail} href={getEmail} title={typeAttribute.label} style={getStyle} class={divStyle}>{typeAttribute.label}</a>
+                <template if:true={isCurrency}>
+                    <lightning-formatted-number class={divStyle} style={getStyle} value={value} format-style="currency"
+                        currency-code={typeAttribute.currencyCode} currency-display-as={typeAttribute.display}
+                        title={tooltip}>
+                    </lightning-formatted-number>
+                </template>
+                <template if:true={isPercent}>
+                    <lightning-formatted-number class={divStyle} style={getStyle} value={value} format-style="percent" title={tooltip}>
+                    </lightning-formatted-number>
+                </template>
+                <div if:true={isNumber} class={divStyle} style={getStyle} title={tooltip}>{value}</div>
+                <template if:true={isDate}>
+                    <lightning-formatted-date-time class={divStyle} style={getStyle} value={value} year={typeAttribute.year} month={typeAttribute.month}
+                        day={typeAttribute.day} hour={typeAttribute.hour} minute={typeAttribute.minute}
+                        second={typeAttribute.second} weekday={typeAttribute.weekday} title={value}>
+                    </lightning-formatted-date-time>
+                </template>
+                <div if:true={isText} class={divStyle} style={getStyle} title={tooltip}>{value}</div>
+                <template if:true={isStatic}>
+                    <lightning-formatted-rich-text class={divStyle} style={getStyle} value={value} title={tooltip}></lightning-formatted-rich-text>
+                </template>
+                <template if:true={isActionButtons}>
+            <template lwc:else>
+                <lightning-button-icon if:true={showPrev} icon-name="utility:arrow_left"
+                      class="slds-m-left_xx-small slds-button slds-button_icon slds-p-around_xx-small"
+                      variant="bare-inverse" onclick={handlePrevClick}>
+                  </lightning-button-icon>
+                    <template for:each={currentActions} for:item="actionBtn">
+                        <lightning-button-icon style={getStyle} key={actionBtn.id} icon-name={actionBtn.iconName}
+                                class={actionBtn.classList}
+                                variant="bare-inverse" size={actionBtn.size} title={actionBtn.title}
+                                alternative-text={actionBtn.altText} name={actionBtn.name} onclick={handleOnMenuClick}
+                                data-id={actionBtn.id} data-action={actionBtn.name} data-list={actionBtn.listName}>
+                            </lightning-button-icon>
+                    </template>
+                      <lightning-button-icon if:true={showNext} icon-name="utility:arrow_right"
+                      class="slds-m-left_xx-small slds-button slds-button_icon slds-p-around_xx-small"
+                      variant="bare-inverse" onclick={handleNextClick}>
+                  </lightning-button-icon>
+					</template>
+                </template>
+                <template if:true={cellIconRight}>
+                    <lightning-icon style={getStyle} icon-name={cellAttribute.iconName}
+                        alternative-text={cellAttribute.iconAlternativeText} title={cellAttribute.iconLabel}>
+                    </lightning-icon>
+                </template>
+           
+            </span>
+</template>
