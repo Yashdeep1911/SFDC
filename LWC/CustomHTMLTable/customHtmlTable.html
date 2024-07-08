@@ -78,8 +78,8 @@
                         <tr key={row.Id} class={row.class} style={row.style}>
                             <template for:each={columns} for:item="col">
                                 <td key={col}>
-                                    <c-cpq_formatted-table-cell-generic row={row} column={col}>
-                                    </c-cpq_formatted-table-cell-generic>
+                                    <c-custom-html-table-cell row={row} column={col}>
+                                    </c-custom-html-table-cell>
                                 </td>
                             </template>
                         </tr>
