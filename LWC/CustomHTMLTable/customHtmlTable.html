@@ -1,0 +1,92 @@
+<!--
+  @description       : Generic List View (DataTable) LWC component with actions
+  @author            : Yashdeep
+-->
+<template>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_7-of-12">
+            <div if:false={isMassActionEmpty}>
+                <template for:each={massActions} for:item="action">
+                    <lightning-button if:true={action.icon} icon-name={action.icon} key={action} variant="brand-outline" class="massCustom" data-action={action.name} label={action.label} title={action.title} onclick={massButtonHandler} disabled={isActionButtonDisabled}></lightning-button>
+                    <lightning-button if:false={action.icon} key={action} variant="brand-outline" class="massCustom" label={action.label} title={action.title} data-action={action.name} onclick={massButtonHandler} disabled={isActionButtonDisabled}></lightning-button>
+                </template>
+
+            </div>
+        </div>
+        <div if:true={isSearchVisible} style="display: flex;" class="slds-col slds-grid slds-size_5-of-12 slds-m-right_none slds-p-around_small">
+                      
+                <div style="display: flex;" class="slds-col slds-size_1-of-3">
+                    <slot style=""></slot>
+                </div>
+                <div class="slds-col slds-size_2-of-3">
+                    <lightning-input size="8" tabindex="0"  name="enter-search" label=""
+                        type="search" placeholder="Search Records ..." oncommit={commitHandler} class="searchClass" style="">
+                    </lightning-input>
+                </div>
+            
+        </div>
+    </div>
+    
+    <div class="slds-table_header-fixed_container slds-border_right slds-border_left"
+        style={isHeight}>
+        <div style="overflow-y:auto;" onscroll={scrollHanlder}>
+            <table id="genericdatatable"
+                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_header-fixed slds-table_fixed-layout slds-no-row-hover"
+                aria-label="Data Table">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <template for:each={columns} for:item="col">
+                            <th key={col} scope={col.fieldName} style={col.width}>
+                                
+                                <div if:true={col.sortable}>
+                                    <a role="button" tabindex="0" onclick={clickHandler} onmouseover={mouseOverHandler}
+                                        class="customColor" onmouseout={mouseOutHandler} title={col.fieldName}>
+
+                                        <div class="slds-grid slds-cell-fixed slds-p-top_x-small">
+                                            <div class="slds-col">
+                                                <div class="slds-truncate" title={col.label}>{col.label}</div>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-icon icon-name={iconName} size="xx-small"
+                                                    alternative-text={alternativeText} title={col.fieldName}
+                                                    class="slds-hide"></lightning-icon>
+                                            </div>
+                                            <div class="slds-col">
+                                                <lightning-icon icon-name=utility:arrowup size="xx-small"
+                                                    alternative-text="Indicates arrowup" data-fieldname={col.fieldName}
+                                                    class="slds-hide"></lightning-icon>
+                                            </div>
+                                        </div>
+
+                                    </a>
+                                </div>
+                                <div class="slds-grid" if:false={col.sortable}>
+
+                                    <div if:false={col.massSelector} class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-col" title={col.label}>
+                                        {col.label}</div>
+                                    <div class="slds-truncate slds-cell-fixed slds-p-top_x-small slds-col" if:true={col.massSelector} title={col.label}>
+                                        <input if:true={isChecked} class="slds-m-left_x-small" type="checkbox" onchange={allSelectHandler} checked></input>
+                                        <input if:false={isChecked} class="slds-m-left_x-small" type="checkbox" onchange={allSelectHandler}></input>
+                                    </div>
+                                </div>
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={rowDataTemp} for:each={rowDataTemp} for:item="row">
+                        <tr key={row.Id} class={row.class} style={row.style}>
+                            <template for:each={columns} for:item="col">
+                                <td key={col}>
+                                    <c-cpq_formatted-table-cell-generic row={row} column={col}>
+                                    </c-cpq_formatted-table-cell-generic>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="slds-align_absolute-center noRecordMsgCls">{allSearchMessage}</div>
+        </div>
+    </div>
+</template>
