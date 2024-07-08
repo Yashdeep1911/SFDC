@@ -1,0 +1,29 @@
+.slds-notify__content h2{
+    display: none !important;
+}
+.slds-is-sortable{
+    align-items: center !important;
+}
+.slds-th__action{
+    padding-right: 2rem !important;
+}
+.customColor{
+    color: black !important;
+}
+:host{
+    --lwc-spacingLarge: 0.2rem;
+    --lwc-tableColorBackgroundHeader: rgb(243, 243, 243);
+    --lwc-tableCellSpacing: 0.2rem;
+}
+
+.massCustom{
+    --slds-c-button-shadow :0 0 3px #124191;
+    --slds-c-button-radius-border : 8px;
+}
+.noRecordMsgCls {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px;
+    color:#df9102;
+    font-style: italic;
+}
